@@ -53,6 +53,7 @@ Google Fonts: Noto Sans SC (中文) + Inter (英文/数字)
 | 圆圈图 | `.ipo-circle` | IPO/I-P-O 流程 |
 | 列表 | `.bullet-list li::before` | 要点列表 |
 | 提示框 | `.prompt-box` | 提示词展示 |
+| 逐字稿栏 | `.transcript-bar` | 底部逐字稿/演讲稿显示 |
 | 发光效果 | `.glow .glow-purple/.glow-yellow` | 装饰背景 |
 | 封面元数据 | `.cover-tag` | 标签展示 |
 | 图标 | `.icon` | 64x64 白色图标 |
@@ -100,6 +101,7 @@ Google Fonts: Noto Sans SC (中文) + Inter (英文/数字)
 3. 添加 `.glow` 装饰元素增加视觉层次
 4. 动画延迟使用 `.anim:nth-child(n)` 递增
 5. 封面页使用 `.badge` 和 `.cover-tag` 增加专业感
+6. 每页可通过 `data-notes` 属性添加逐字稿（演讲备注），演示时按 `T` 键切换显示/隐藏
 
 ## ⚠️ 已知问题 & 解决方案（必须遵循）
 

@@ -25,6 +25,9 @@ git clone https://github.com/baopeng0604/html-presentation.git
 
 # 软链接到 Claude Code skills 目录，即可自动加载
 ln -s $(pwd)/html-presentation ~/.claude/skills/html-presentation
+
+Note:
+clause 对话中，需要 /reload-plugins
 ```
 
 Claude Code 会自动发现 `~/.claude/skills/` 下的 Skill，无需额外配置。
@@ -52,7 +55,21 @@ Claude 会自动：
 | `←` / `↑` | 上一页 |
 | `Home` | 跳到首页 |
 | `End` | 跳到末页 |
+| `T` | 切换逐字稿栏 显示/隐藏 |
 | 点击右侧圆点 | 跳转到指定页 |
+
+### 逐字稿 / 照读脚本
+
+每页幻灯片支持通过 `data-notes` 属性添加完整照读脚本，覆盖当前页所有信息点：
+
+```html
+<section class="slide" data-notes="大家好，欢迎来到今天的分享。我是...">
+```
+
+- AI 生成 PPT 时会自动为每页编写完整演讲稿
+- 演示时底部显示当前页逐字稿，**按 `T` 键切换显示/隐藏**
+- 无 `data-notes` 的页面自动隐藏栏位
+- 翻页时逐字稿自动跟随切换
 
 ## 设计规范
 
@@ -78,6 +95,7 @@ Claude 会自动：
 | 引用框 | `.quote-block` | 引言/金句 |
 | IPO 圆 | `.ipo-circle` | I-P-O 流程图 |
 | 提示框 | `.prompt-box` | 提示词展示 |
+| 逐字稿栏 | `.transcript-bar` | 底部演讲稿/备注显示，按 T 切换 |
 | 发光效果 | `.glow` | 装饰背景光晕 |
 | 封面标签 | `.cover-tag` | 封面元数据 |
 

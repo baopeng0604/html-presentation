@@ -170,6 +170,38 @@ body {
 }
 .hint.hidden { opacity: 0; }
 
+/* Transcript Bar */
+.transcript-bar {
+  position: fixed;
+  bottom: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  background: rgba(17,17,17,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--title);
+  border-radius: 10px;
+  padding: 10px 18px;
+  max-width: 72vw;
+  font-size: 13px;
+  color: #aaaaaa;
+  line-height: 1.55;
+  opacity: 1;
+  max-height: 80px;
+  overflow-y: auto;
+  transition: opacity 0.3s, max-height 0.3s, padding 0.3s, border-width 0.3s;
+}
+.transcript-bar.hidden {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  overflow: hidden;
+}
+
 /* ═══════════ TYPOGRAPHY ═══════════ */
 .slide-label {
   font-size: clamp(11px, 1.1vw, 14px);
@@ -625,6 +657,7 @@ h3 {
   .dots { display: none; }
   .ipo-flow { flex-direction: column; }
   .ipo-arrow { transform: rotate(90deg); }
+  .transcript-bar { max-width: 90vw; font-size: 12px; padding: 8px 14px; bottom: 80px; }
 }
 </style>
 </head>
@@ -634,13 +667,14 @@ h3 {
 <div class="progress" id="progress"></div>
 <div class="dots" id="dots"></div>
 <div class="hint" id="hint">← → 或点击翻页</div>
+<div class="transcript-bar hidden" id="transcriptBar"></div>
 
 <div class="deck" id="deck">
 
 <!-- ═══════════ 示例页面 1: 封面 ═══════════ -->
 <!-- 复制此模板创建新页面，将 class="anim" 添加到需要动画的元素上 -->
 <!--
-<section class="slide">
+<section class="slide" data-notes="欢迎来到今天的分享。">
   <div class="glow glow-purple" style="top:-100px;left:-100px;"></div>
   <div class="glow glow-yellow" style="bottom:-100px;right:-100px;"></div>
   <div class="anim badge">
@@ -825,6 +859,8 @@ h3 {
   const progress = document.getElementById('progress');
   const dotsWrap = document.getElementById('dots');
   const hint = document.getElementById('hint');
+  const transcriptBar = document.getElementById('transcriptBar');
+  let showTranscript = true;
 
   // Build dots
   for (let i = 0; i < total; i++) {
@@ -836,6 +872,17 @@ h3 {
   const dots = dotsWrap.querySelectorAll('.dot');
 
   function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateTranscript() {
+    const slide = slides[current];
+    const notes = slide.dataset.notes;
+    if (notes) {
+      transcriptBar.textContent = notes;
+      if (showTranscript) transcriptBar.classList.remove('hidden');
+    } else {
+      transcriptBar.classList.add('hidden');
+    }
+  }
 
   function goTo(idx) {
     if (idx < 0 || idx >= total || idx === current) return;
@@ -861,6 +908,8 @@ h3 {
     progress.style.width = ((current + 1) / total * 100) + '%';
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total - 1;
+
+    updateTranscript();
   }
 
   function next() { goTo(current + 1); }
@@ -869,6 +918,7 @@ h3 {
   slides[0].classList.add('active');
   prevBtn.disabled = true;
   progress.style.width = (1 / total * 100) + '%';
+  updateTranscript();
 
   prevBtn.addEventListener('click', prev);
   nextBtn.addEventListener('click', next);
@@ -878,6 +928,7 @@ h3 {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
     if (e.key === 'Home') { e.preventDefault(); goTo(0); }
     if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+    if (e.key === 't' || e.key === 'T') { showTranscript = !showTranscript; updateTranscript(); }
   });
 
   // Touch / swipe
