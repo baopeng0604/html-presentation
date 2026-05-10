@@ -19,22 +19,23 @@ Apple 风 / Notion 风 HTML 演示文稿生成器 —— 一个 Claude Code Skil
 
 ### 安装 Skill
 
-将此仓库克隆到本地，然后在 Claude Code 中注册 Skill:
-
 ```bash
-# 克隆仓库
-git clone https://github.com/juanjuanjie/html-presentation.git
+# 克隆仓库到本地
+git clone https://github.com/baopeng0604/html-presentation.git
+
+# 软链接到 Claude Code skills 目录，即可自动加载
+ln -s $(pwd)/html-presentation ~/.claude/skills/html-presentation
 ```
 
-在 Claude Code 的配置中添加此 Skill 路径（CLAUDE.md 或 settings.json），Claude 即可在对话中自动识别并使用。
+Claude Code 会自动发现 `~/.claude/skills/` 下的 Skill，无需额外配置。
 
 ## 使用方法
 
-在 Claude Code 对话中直接描述需求，例如：
+在 Claude Code 对话中使用 `/html-presentation` 显式调用 Skill，例如：
 
-> 帮我生成一个 10 页的 HTML 演示文稿，介绍大模型的工作原理，风格用苹果风黑底
+> /html-presentation 帮我生成一个 10 页的 HTML 演示文稿，介绍大模型的工作原理，风格用苹果风黑底
 
-> 做一个关于 React 19 新特性的技术分享 slides，需要有对比展示和流程图
+> /html-presentation 做一个关于 React 19 新特性的技术分享 slides，需要有对比展示和流程图
 
 Claude 会自动：
 1. 规划内容结构（封面 → 痛点 → 核心内容 → 总结）
@@ -92,7 +93,7 @@ html-presentation/
 
 ## 参考来源
 
-- 原始仓库: https://github.com/juanjuanjie/html-presentation
+- 原始仓库: https://github.com/baopeng0604/html-presentation
 - 视频教程: [手把手教你打造专属HTML SKILL！让AI完全懂你的设计风格](https://www.bilibili.com/video/BV1HToiBCEwg/?share_source=copy_web&vd_source=712f0e9d936cbf0122fb49cc19ca5abb)
 
 ## License
