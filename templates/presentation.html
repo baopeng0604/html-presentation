@@ -77,8 +77,7 @@ body {
 .controls {
   position: fixed;
   bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 32px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -158,7 +157,7 @@ body {
 
 .hint {
   position: fixed;
-  bottom: 86px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
@@ -173,7 +172,7 @@ body {
 /* Transcript Bar */
 .transcript-bar {
   position: fixed;
-  bottom: 88px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 99;
@@ -201,6 +200,11 @@ body {
   border-width: 0;
   overflow: hidden;
 }
+
+.transcript-bar::-webkit-scrollbar { width: 5px; }
+.transcript-bar::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 3px; }
+.transcript-bar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+.transcript-bar::-webkit-scrollbar-thumb:hover { background: #555; }
 
 /* ═══════════ TYPOGRAPHY ═══════════ */
 .slide-label {
@@ -657,7 +661,7 @@ h3 {
   .dots { display: none; }
   .ipo-flow { flex-direction: column; }
   .ipo-arrow { transform: rotate(90deg); }
-  .transcript-bar { max-width: 90vw; font-size: 12px; padding: 8px 14px; bottom: 80px; }
+  .transcript-bar { max-width: 90vw; font-size: 12px; padding: 8px 14px; }
 }
 </style>
 </head>
@@ -878,7 +882,10 @@ h3 {
     const notes = slide.dataset.notes;
     if (notes) {
       transcriptBar.textContent = notes;
-      if (showTranscript) transcriptBar.classList.remove('hidden');
+      transcriptBar.scrollTop = 0;
+    }
+    if (showTranscript && notes) {
+      transcriptBar.classList.remove('hidden');
     } else {
       transcriptBar.classList.add('hidden');
     }
